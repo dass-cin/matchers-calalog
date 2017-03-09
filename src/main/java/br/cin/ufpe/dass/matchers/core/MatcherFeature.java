@@ -1,0 +1,22 @@
+package br.cin.ufpe.dass.matchers.core;
+
+/**
+ * Created by diego on 07/03/17.
+ */
+public enum MatcherFeature {
+
+    INPUT_TYPE_SCHEMAS,
+    INPUT_TYPE_INSTANCES,
+    ONTOLOGIES_NUMBER,
+    INSTANCES_NUMBER,
+    CLASSES_NUMBER,
+    RELATIONS_NUMBER,
+    AXIOMS_NUMBER,
+    ADDITIONAL_RESOURCES,
+    EXECUTION_TYPE,
+    ELEMENT_LEVEL,
+    SIMILARITY_RELATION,
+    MATCHING_CARDINALITY,
+    REST_API_ENDPOINT
+
+}
