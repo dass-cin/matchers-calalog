@@ -8,6 +8,7 @@ import br.cin.ufpe.dass.matchers.repository.AlignmentRepository;
 import br.cin.ufpe.dass.matchers.service.AlignmentService;
 import br.cin.ufpe.dass.matchers.service.OntologyService;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
+import fr.inrialpes.exmo.align.impl.BasicAlignment;
 import org.semanticweb.owl.align.AlignmentException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,23 +22,12 @@ import java.util.Properties;
 @RequestMapping("/api/")
 public class AlignmentEvaluationResource {
 
-    private OntologyService ontologyService;
+    private final OntologyService ontologyService;
 
-    private AlignmentService alignmentService;
+    private final AlignmentService alignmentService;
 
-    public OntologyService getOntologyService() {
-        return ontologyService;
-    }
-
-    public void setOntologyService(OntologyService ontologyService) {
+    public AlignmentEvaluationResource(OntologyService ontologyService, AlignmentService alignmentService) {
         this.ontologyService = ontologyService;
-    }
-
-    public AlignmentService getAlignmentService() {
-        return alignmentService;
-    }
-
-    public void setAlignmentService(AlignmentService alignmentService) {
         this.alignmentService = alignmentService;
     }
 

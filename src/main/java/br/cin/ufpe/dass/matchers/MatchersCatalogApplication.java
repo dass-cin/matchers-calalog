@@ -41,8 +41,8 @@ public class MatchersCatalogApplication implements CommandLineRunner {
 			matcher.setVersion("3.0");
 			matcher.setEndPoint("http://localhost:8081/api/coma");
 
-			matcher.getConfigurationParameters().put("resolution", "RES2_SELFNODE");
-			matcher.getConfigurationParameters().put("measure", "SIM_STR_LEVENSHTEIN_LUCENE");
+			matcher.getConfigurationParameters().put("resolution", "RES2_ALLNODES"); //
+			matcher.getConfigurationParameters().put("measure", "SIM_STR_EDITDIST");
 
 			matcherRepository.save(matcher);
 		}

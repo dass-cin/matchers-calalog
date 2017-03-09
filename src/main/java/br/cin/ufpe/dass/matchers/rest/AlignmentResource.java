@@ -1,21 +1,15 @@
 package br.cin.ufpe.dass.matchers.rest;
 
 import br.cin.ufpe.dass.matchers.core.Alignment;
-import br.cin.ufpe.dass.matchers.core.Matcher;
-import br.cin.ufpe.dass.matchers.core.Ontology;
-import br.cin.ufpe.dass.matchers.exception.AlignmentNotFoundException;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.exception.MatcherNotFoundException;
 import br.cin.ufpe.dass.matchers.repository.AlignmentRepository;
 import br.cin.ufpe.dass.matchers.service.AlignmentService;
 import br.cin.ufpe.dass.matchers.service.OntologyService;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
-import org.apache.catalina.connector.Response;
 import org.semanticweb.owl.align.AlignmentException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.websocket.OnOpen;
 
 /**
  * Created by diego on 08/03/17.
@@ -24,29 +18,16 @@ import javax.websocket.OnOpen;
 @RequestMapping("/api/")
 public class AlignmentResource {
 
-    private OntologyService ontologyService;
+    private final OntologyService ontologyService;
 
-    private AlignmentService alignmentService;
+    private final AlignmentService alignmentService;
 
-    public OntologyService getOntologyService() {
-        return ontologyService;
-    }
+    private final AlignmentRepository alignmentRepository;
 
-    public void setOntologyService(OntologyService ontologyService) {
-        this.ontologyService = ontologyService;
-    }
-
-    public AlignmentService getAlignmentService() {
-        return alignmentService;
-    }
-
-    public void setAlignmentService(AlignmentService alignmentService) {
-        this.alignmentService = alignmentService;
-    }
-
-    public AlignmentResource(OntologyService ontologyService, AlignmentService alignmentService) {
+    public AlignmentResource(OntologyService ontologyService, AlignmentService alignmentService, AlignmentRepository alignmentRepository) {
         this.ontologyService = ontologyService;
         this.alignmentService = alignmentService;
+        this.alignmentRepository = alignmentRepository;
     }
 
     @PostMapping("/alignment")
@@ -68,5 +49,17 @@ public class AlignmentResource {
 
         return ResponseEntity.ok().body(alignment);
     }
+
+    @GetMapping("/alignment")
+    public ResponseEntity<java.util.List<Alignment>> listAlignments() {
+        return ResponseEntity.ok().body(alignmentRepository.findAll());
+    }
+
+    @GetMapping("/alignment/{id}")
+    public ResponseEntity<Alignment> findAlignment(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(alignmentRepository.findOne(id));
+    }
+
+
 
 }

@@ -12,6 +12,7 @@ import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
 import br.cin.ufpe.dass.matchers.util.FormatHelper;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
 import br.cin.ufpe.dass.matchers.util.OntologyUtils;
+import fr.inrialpes.exmo.align.impl.BasicAlignment;
 import fr.inrialpes.exmo.align.impl.eval.PRecEvaluator;
 import fr.inrialpes.exmo.align.parser.AlignmentParser;
 import javafx.application.Application;
@@ -36,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -101,14 +103,18 @@ public class AlignmentService {
     public Properties evaluate(String alignmentId, String referenceAlignmentFile) throws AlignmentNotFoundException, AlignmentException {
         Alignment alignmentToEvaluate = alignmentRepository.findOne(alignmentId);
         if (alignmentToEvaluate == null) {
-            throw new AlignmentNotFoundException(String.format("Alignment with id %s not found"));
+            throw new AlignmentNotFoundException(String.format("Alignment with id %s not found", alignmentId));
         }
 
-        AlignmentParser aparser = new AlignmentParser(0);
-        org.semanticweb.owl.align.Alignment reference = aparser.parse( new File( referenceAlignmentFile ).toURI() );
+        Properties p = new Properties();
 
-        Evaluator evaluator = new PRecEvaluator( reference, alignmentToEvaluate.toBasicAlignment() );
-        evaluator.eval(null);
+        AlignmentParser aparser = new AlignmentParser(0);
+
+        org.semanticweb.owl.align.Alignment referenceAlignment = aparser.parse(URI.create(referenceAlignmentFile) );
+
+        Evaluator evaluator = null;
+        evaluator = new PRecEvaluator(referenceAlignment, alignmentToEvaluate.toURIAlignment() );
+        evaluator.eval(p);
 
         return evaluator.getResults();
 

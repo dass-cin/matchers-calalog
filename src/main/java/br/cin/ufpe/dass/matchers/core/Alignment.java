@@ -2,10 +2,7 @@ package br.cin.ufpe.dass.matchers.core;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import fr.inrialpes.exmo.align.impl.BasicAlignment;
-import fr.inrialpes.exmo.align.impl.BasicCell;
-import fr.inrialpes.exmo.align.impl.BasicConfidence;
-import fr.inrialpes.exmo.align.impl.BasicRelation;
+import fr.inrialpes.exmo.align.impl.*;
 import org.semanticweb.owl.align.AlignmentException;
 import org.semanticweb.owl.align.Cell;
 import org.semanticweb.owl.align.Relation;
@@ -24,6 +21,8 @@ public class Alignment {
     @Id
     private String id;
 
+    private Set<Correspondence> correspondences = new HashSet<Correspondence>();
+
     @DBRef
     private Matcher matcher;
 
@@ -33,10 +32,11 @@ public class Alignment {
 
     private long totalDiskUsed;
 
+    @DBRef
     private Ontology ontology1;
-    private Ontology ontology2;
 
-    private Set<Correspondence> correspondences = new HashSet<Correspondence>();
+    @DBRef
+    private Ontology ontology2;
 
     public String getId() {
         return id;
@@ -55,13 +55,25 @@ public class Alignment {
     }
 
     public BasicAlignment toBasicAlignment() throws AlignmentException {
-        BasicAlignment basicAlignment = new BasicAlignment();
-        basicAlignment = basicAlignment.createNewAlignment(ontology1, ontology2, BasicRelation.class, BasicConfidence.class);
+        BasicAlignment basicAlignment = new BasicAlignment().createNewAlignment(ontology1, ontology2, BasicRelation.class, BasicConfidence.class);
         for (Correspondence correspondence : this.correspondences) {
             BasicCell basicCell = correspondence.toBasicCell();
             basicAlignment.addAlignCell(basicCell.getId(), basicCell.getObject1(), basicCell.getObject2(), basicCell.getRelation(), basicCell.getStrength());
         }
+        basicAlignment.setOntology1(ontology1);
+        basicAlignment.setOntology2(ontology2);
         return basicAlignment;
+    }
+
+    public URIAlignment toURIAlignment() throws AlignmentException {
+        URIAlignment uriAlignment = new URIAlignment();
+        for (Correspondence correspondence : this.correspondences) {
+            BasicCell basicCell = correspondence.toBasicCell();
+            uriAlignment.addAlignCell(basicCell.getId(), basicCell.getObject1(), basicCell.getObject2(), basicCell.getRelation(), basicCell.getStrength());
+        }
+        uriAlignment.setOntology1(ontology1);
+        uriAlignment.setOntology2(ontology2);
+        return uriAlignment;
     }
 
     public boolean addCorrespodence(Correspondence correspondence) {
