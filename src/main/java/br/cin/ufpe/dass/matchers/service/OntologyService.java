@@ -51,7 +51,7 @@ public class OntologyService {
             try {
                 OWLOntology ontology = manager.loadOntologyFromOntologyDocument(iri);
                 localOntology = new Ontology();
-                localOntology.setURI(iri.toURI());
+                localOntology.setUri(iri.toURI());
                 localOntology.setFile(IRI.create(path).toURI());
                 repository.save(localOntology);
             } catch (OWLOntologyCreationException e) {
