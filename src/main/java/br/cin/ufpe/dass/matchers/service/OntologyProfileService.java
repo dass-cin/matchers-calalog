@@ -65,7 +65,6 @@ public class OntologyProfileService {
         /** Parsing classes **/
         for (OntClass cl: model.listClasses().toList()) {
             if(cl.isAnon()) continue;
-//            if(!cl.getURI().startsWith(ontology.getURI().toString())) continue;
 
             profile.setClasses(profile.getClasses()+1);
 
@@ -86,15 +85,13 @@ public class OntologyProfileService {
             if(comment==null) profile.setNullComments(profile.getNullComments()+1);
 
             int depth = OntologyUtils.getClassDepth(cl,1);
-            //if(debug) System.out.println("name:"+cl.getLocalName()+" depth:"+depth);
             totalDepth += depth;
         }
 
-        profile.setAvgDepth(totalDepth /profile.getClasses());
+        profile.setAvgDepth(totalDepth / profile.getClasses());
 
         /** Parsing data type properties **/
         for (OntProperty pr: model.listDatatypeProperties().toList()) {
-//            if(!pr.getURI().startsWith(ontology.getURI().toString())) continue;
 
             String label = pr.getLabel(null);
 
@@ -109,7 +106,6 @@ public class OntologyProfileService {
 
         /** Parsing object properties **/
         for (OntProperty pr: model.listObjectProperties().toList()) {
-//            if(!pr.getURI().startsWith(ontology.getURI().toString())) continue;
 
             String label = pr.getLabel(null);
 
