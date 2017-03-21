@@ -1,15 +1,15 @@
 package br.cin.ufpe.dass.matchers.rest;
 
 import br.cin.ufpe.dass.matchers.core.Ontology;
+import br.cin.ufpe.dass.matchers.core.OntologyProfile;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
+import br.cin.ufpe.dass.matchers.service.OntologyProfileService;
 import br.cin.ufpe.dass.matchers.service.OntologyService;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
-import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by diego on 08/03/17.
@@ -22,9 +22,12 @@ public class OntologyResource {
 
     private final OntologyRepository ontologyRepository;
 
-    public OntologyResource(OntologyService ontologyService, OntologyRepository ontologyRepository) {
+    private final OntologyProfileService ontologyProfileService;
+
+    public OntologyResource(OntologyService ontologyService, OntologyRepository ontologyRepository, OntologyProfileService ontologyProfileService) {
         this.ontologyService = ontologyService;
         this.ontologyRepository = ontologyRepository;
+        this.ontologyProfileService = ontologyProfileService;
     }
 
     @GetMapping("/ontologies")
@@ -35,6 +38,11 @@ public class OntologyResource {
     @GetMapping("/ontologies/{id}")
     public ResponseEntity<Ontology> findOntology(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(ontologyRepository.findOne(id));
+    }
+
+    @PostMapping("/ontologies/profile/{id}")
+    public ResponseEntity<OntologyProfile> generateProfile(@PathVariable("id") String id) {
+        return ResponseEntity.ok().body(ontologyProfileService.generateOntologyProfile(id));
     }
 
     @PostMapping("/ontologies")

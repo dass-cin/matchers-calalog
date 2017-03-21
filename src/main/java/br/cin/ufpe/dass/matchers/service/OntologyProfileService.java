@@ -3,6 +3,7 @@ package br.cin.ufpe.dass.matchers.service;
 import br.cin.ufpe.dass.matchers.core.Ontology;
 import br.cin.ufpe.dass.matchers.core.OntologyMetrics;
 import br.cin.ufpe.dass.matchers.core.OntologyProfile;
+import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
 import br.cin.ufpe.dass.matchers.util.OntologyUtils;
 import br.cin.ufpe.dass.matchers.util.StringUtil;
 import edu.smu.tspell.wordnet.Synset;
@@ -11,10 +12,6 @@ import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntProperty;
 import org.springframework.stereotype.Service;
-
-import java.time.ZonedDateTime;
-
-import static br.cin.ufpe.dass.matchers.service.OntologyProfileService.WordnetType.LOCALNAMES;
 
 /**
  * Created by diego on 07/03/17.
@@ -26,23 +23,31 @@ public class OntologyProfileService {
 
     private final OntologyService ontologyService;
 
+    private final OntologyRepository ontologyRepository;
+
     enum WordnetType {LOCALNAMES, LABELS, COMMENTS};
 
-    public OntologyProfileService(WordNetDatabase wordNetDatabase, OntologyService ontologyService) {
+    public OntologyProfileService(WordNetDatabase wordNetDatabase, OntologyService ontologyService, OntologyRepository ontologyRepository) {
         this.wordNetDatabase = wordNetDatabase;
         this.ontologyService = ontologyService;
+        this.ontologyRepository = ontologyRepository;
     }
 
-    public OntologyProfile generateOntologyProfile(Ontology ontology) {
+    public OntologyProfile generateOntologyProfile(String ontologyId) {
 
-        OntologyProfile profile = this.generateProfile(ontology);
+        Ontology ontology = ontologyRepository.findOne(ontologyId);
+
+        OntologyProfile profile = this.buildProfile(ontology);
         profile.setMetrics(this.calculateMetrics(ontology, profile));
+        ontology.setProfile(profile);
+
+        ontologyRepository.save(ontology);
 
         return profile;
 
     }
 
-    private OntologyProfile generateProfile(Ontology ontology) {
+    private OntologyProfile buildProfile(Ontology ontology) {
 
         OntologyProfile profile = new OntologyProfile();
 

@@ -32,12 +32,22 @@ public class Ontology {
     @Indexed(unique = true)
     private URI uri;
 
+    private OntologyProfile profile;
+
     public BasicOntology toBasicOntology() {
         BasicOntology basicOntology = new BasicOntology();
         basicOntology.setFile(IRI.create(file).toURI());
         basicOntology.setFormalism(formalism);
         basicOntology.setURI(uri);
         return basicOntology;
+    }
+
+    public OntologyProfile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(OntologyProfile profile) {
+        this.profile = profile;
     }
 
     public String getId() {
