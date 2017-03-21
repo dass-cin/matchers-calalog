@@ -1,6 +1,7 @@
 package br.cin.ufpe.dass.matchers.core;
 
 import fr.inrialpes.exmo.ontowrap.BasicOntology;
+import org.apache.jena.ontology.OntModel;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
@@ -25,10 +26,6 @@ public class Ontology extends BasicOntology {
 
     private String description;
 
-    private Set<OntologyProperty> properties = new HashSet<>();
-
-    private Set<OntologyProperty> partOfProperties = new HashSet<>();
-
     public String getId() {
         return id;
     }
@@ -45,20 +42,4 @@ public class Ontology extends BasicOntology {
         this.description = description;
     }
 
-
-    public Set<OntologyProperty> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Set<OntologyProperty> properties) {
-        this.properties = properties;
-    }
-
-    public Set<OntologyProperty> getPartOfProperties() {
-        return partOfProperties;
-    }
-
-    public void setPartOfProperties(Set<OntologyProperty> partOfProperties) {
-        this.partOfProperties = partOfProperties;
-    }
 }

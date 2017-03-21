@@ -31,7 +31,7 @@ public class AlignmentEvaluationResource {
         this.alignmentService = alignmentService;
     }
 
-    @PostMapping("/evaluation")
+    @PostMapping("/alignment/evaluations")
     public ResponseEntity<Properties> evaluate(@RequestParam("alignmentId") String alignmentId, @RequestParam("referenceAlignment") String referenceAlignmentPath) {
         Properties alignment = null;
         try {

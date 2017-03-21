@@ -2,11 +2,10 @@ package br.cin.ufpe.dass.matchers.service;
 
 import br.cin.ufpe.dass.matchers.config.ApplicationProperties;
 import br.cin.ufpe.dass.matchers.core.Ontology;
-import br.cin.ufpe.dass.matchers.core.OntologyProperty;
+import br.cin.ufpe.dass.matchers.core.OntologyProfile;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
 import br.cin.ufpe.dass.matchers.util.FormatHelper;
-import br.cin.ufpe.dass.matchers.util.OntologyUtils;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.*;
@@ -20,7 +19,6 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.Set;
 
 /**
  * Created by diego on 07/03/17.
@@ -54,8 +52,7 @@ public class OntologyService {
                 OWLOntology ontology = manager.loadOntologyFromOntologyDocument(iri);
                 localOntology = new Ontology();
                 localOntology.setURI(iri.toURI());
-                localOntology.setProperties(OntologyUtils.createProperties(ontology, iri.toURI(), OntologyProperty.OntologyPropertyType.PROPERTY));
-                localOntology.setPartOfProperties(OntologyUtils.createProperties(ontology, iri.toURI(), OntologyProperty.OntologyPropertyType.PART_OF_PROPERTY));
+                localOntology.setFile(IRI.create(path).toURI());
                 repository.save(localOntology);
             } catch (OWLOntologyCreationException e) {
                 System.out.println(FormatHelper.formatFilePathToApi(path, true));
@@ -110,5 +107,8 @@ public class OntologyService {
     public static Model createOntologyFromDirectory(String path) {
         return FileManager.get().loadModel(FormatHelper.formatFilePathToApi(path, false));
     }
+
+
+
 
 }

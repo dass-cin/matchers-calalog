@@ -9,7 +9,7 @@ public class AlignmentEvaluation {
 
     private Alignment evaluatedAlignment;
 
-    private Alignment goldStandard;
+    private Alignment referenceAlignment; //@TODO implementar carregamento do arquivo para o objeto Alignment
 
     private double precision;
 
@@ -52,12 +52,12 @@ public class AlignmentEvaluation {
         this.evaluatedAlignment = evaluatedAlignment;
     }
 
-    public Alignment getGoldStandard() {
-        return goldStandard;
+    public Alignment getReferenceAlignment() {
+        return referenceAlignment;
     }
 
-    public void setGoldStandard(Alignment goldStandard) {
-        this.goldStandard = goldStandard;
+    public void setReferenceAlignment(Alignment referenceAlignment) {
+        this.referenceAlignment = referenceAlignment;
     }
 
     public Matcher getMatcher() {
