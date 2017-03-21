@@ -90,7 +90,7 @@ public class OntologyProfileService {
             totalDepth += depth;
         }
 
-        profile.setAvgDepth((float)totalDepth/profile.getClasses());
+        profile.setAvgDepth(totalDepth /profile.getClasses());
 
         /** Parsing data type properties **/
         for (OntProperty pr: model.listDatatypeProperties().toList()) {
@@ -134,6 +134,8 @@ public class OntologyProfileService {
         }
         profile.setTotalSubClassesOf(subClassesOf);
 
+        profile.setAttributes(model.listDatatypeProperties().toList().size());
+
         /** Relations that are not described as SubClassOf  **/
         profile.setOtherRelations(model.listObjectProperties().toList().size());
 
@@ -145,11 +147,11 @@ public class OntologyProfileService {
         OntologyMetrics metrics = new OntologyMetrics();
 
         metrics.setRelationshipRichness((float)profile.getOtherRelations()/(profile.getOtherRelations()+profile.getTotalSubClassesOf()));
-        metrics.setAttributeRichness(profile.getAttributes()/profile.getClasses());
+        metrics.setAttributeRichness((float)profile.getAttributes()/profile.getClasses());
         metrics.setInheritanceRichness((float)profile.getTotalSubClassesOf() / profile.getTotalElements());
         metrics.setClassRichness((float)profile.getClassesWithInstances() / profile.getClasses());
-        metrics.setDiffLabelLocPerc((float)profile.getDiffLabelLocalName() / profile.getTotalElements());
         metrics.setAvgPopulation((float)profile.getInstancesNumber() / profile.getClasses());
+        metrics.setDiffLabelLocPerc((float)profile.getDiffLabelLocalName() / profile.getTotalElements());
         metrics.setAvgDepth(profile.getAvgDepth());
         metrics.setLabelWordnet((float)calculateWordnetCoverage(ontology, WordnetType.LABELS));
         metrics.setLocalWordnet((float)calculateWordnetCoverage(ontology, WordnetType.LOCALNAMES));

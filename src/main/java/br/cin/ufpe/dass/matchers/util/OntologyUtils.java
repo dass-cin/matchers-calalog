@@ -118,7 +118,7 @@ public class OntologyUtils {
 
     public static int getClassDepth(OntClass cl, int i) {
         try {
-            List<OntClass> parents = cl.listSuperClasses().toList();
+            List<OntClass> parents = cl.listSuperClasses(true).toList();
 
             for (int j = 0; j < parents.size(); j++) {
                 if(parents.get(j).isAnon()) continue;
