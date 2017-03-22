@@ -71,8 +71,8 @@ public class Alignment {
             BasicCell basicCell = correspondence.toBasicCell();
             uriAlignment.addAlignCell(basicCell.getId(), basicCell.getObject1(), basicCell.getObject2(), basicCell.getRelation(), basicCell.getStrength());
         }
-        uriAlignment.setOntology1(ontology1);
-        uriAlignment.setOntology2(ontology2);
+        uriAlignment.setOntology1(ontology1.getFile());
+        uriAlignment.setOntology2(ontology2.getFile());
         return uriAlignment;
     }
 
