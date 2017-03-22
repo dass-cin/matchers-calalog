@@ -19,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
 import java.net.URI;
 import java.util.Map;
 import java.util.Properties;
@@ -101,7 +102,7 @@ public class AlignmentService {
 
         AlignmentParser aparser = new AlignmentParser(0);
 
-        org.semanticweb.owl.align.Alignment referenceAlignment = aparser.parse(URI.create(referenceAlignmentFile) );
+        org.semanticweb.owl.align.Alignment referenceAlignment = aparser.parse(URI.create(referenceAlignmentFile));
 
         Evaluator evaluator = null;
         evaluator = new PRecEvaluator(referenceAlignment, alignmentToEvaluate.toURIAlignment() );

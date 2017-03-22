@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by diego on 07/03/17.
  */
@@ -50,7 +52,7 @@ public class COMAWrapperResource {
         Alignment alignment = null;
         try {
             alignment = comaWrapperService.match(source, target, resolutionInt, measureInt);
-        } catch (AlignmentException e) {
+        } catch (AlignmentException | UnsupportedEncodingException e) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal error while building alignment");
             e.printStackTrace();
         }
