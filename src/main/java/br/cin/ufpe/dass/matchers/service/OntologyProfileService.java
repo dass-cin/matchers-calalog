@@ -33,7 +33,7 @@ public class OntologyProfileService {
         this.ontologyRepository = ontologyRepository;
     }
 
-    public OntologyProfile generateOntologyProfile(String ontologyId) {
+    public Ontology generateOntologyProfile(String ontologyId) {
 
         Ontology ontology = ontologyRepository.findOne(ontologyId);
 
@@ -43,7 +43,7 @@ public class OntologyProfileService {
 
         ontologyRepository.save(ontology);
 
-        return profile;
+        return ontology;
 
     }
 

@@ -41,7 +41,7 @@ public class OntologyResource {
     }
 
     @PostMapping("/ontologies/profile/{id}")
-    public ResponseEntity<OntologyProfile> generateProfile(@PathVariable("id") String id) {
+    public ResponseEntity<Ontology> generateProfile(@PathVariable("id") String id) {
         return ResponseEntity.ok().body(ontologyProfileService.generateOntologyProfile(id));
     }
 

@@ -7,8 +7,6 @@ import java.time.ZonedDateTime;
  */
 public class OntologyProfile {
 
-    private OntologyMetrics metrics = new OntologyMetrics();
-
     private int attributes = 0;
     private int classes = 0;
     private float avgDepth = 0;
@@ -25,6 +23,8 @@ public class OntologyProfile {
     private float diffLabelLocPercent = 0;
     private int totalSubClassesOf = 0;
     private int otherRelations = 0;
+
+    private OntologyMetrics metrics = new OntologyMetrics();
 
     public int getClassesWithInstances() {
         return classesWithInstances;
