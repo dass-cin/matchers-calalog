@@ -27,7 +27,7 @@ public class MatchersInit implements ApplicationListener<ApplicationReadyEvent> 
 			matcher.setVersion("3.0");
 			matcher.setEndPoint("http://localhost:8081/api/coma");
 
-			matcher.getConfigurationParameters().put("resolution", "RES2_ALLNODES"); //
+			matcher.getConfigurationParameters().put("resolution", "RES2_SELFNODE"); //
 			matcher.getConfigurationParameters().put("measure", "SIM_STR_EDITDIST");
 
 			matcherRepository.save(matcher);

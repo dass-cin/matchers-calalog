@@ -2,7 +2,6 @@ package br.cin.ufpe.dass.matchers.service;
 
 import br.cin.ufpe.dass.matchers.config.ApplicationProperties;
 import br.cin.ufpe.dass.matchers.core.Ontology;
-import br.cin.ufpe.dass.matchers.core.OntologyProfile;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
 import br.cin.ufpe.dass.matchers.util.FormatHelper;
@@ -26,9 +25,9 @@ import java.io.File;
 @Service
 public class OntologyService {
 
-    private OntologyRepository repository;
+    private final OntologyRepository repository;
 
-    private ApplicationProperties configProperties;
+    private final ApplicationProperties configProperties;
 
     public OntologyService(OntologyRepository repository, ApplicationProperties configProperties) {
         this.repository = repository;

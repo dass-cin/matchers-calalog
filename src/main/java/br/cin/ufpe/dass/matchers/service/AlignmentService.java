@@ -9,39 +9,19 @@ import br.cin.ufpe.dass.matchers.exception.MatcherNotFoundException;
 import br.cin.ufpe.dass.matchers.repository.AlignmentRepository;
 import br.cin.ufpe.dass.matchers.repository.MatcherRepository;
 import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
-import br.cin.ufpe.dass.matchers.util.FormatHelper;
-import br.cin.ufpe.dass.matchers.util.HeaderUtil;
-import br.cin.ufpe.dass.matchers.util.OntologyUtils;
-import fr.inrialpes.exmo.align.impl.BasicAlignment;
 import fr.inrialpes.exmo.align.impl.eval.PRecEvaluator;
 import fr.inrialpes.exmo.align.parser.AlignmentParser;
-import javafx.application.Application;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.*;
-import org.apache.jena.util.FileManager;
-import org.apache.jena.vocabulary.RDFS;
 import org.semanticweb.owl.align.*;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLOntology;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * Created by diego on 07/03/17.
@@ -49,28 +29,39 @@ import java.util.Set;
 @Service
 public class AlignmentService {
 
-    private MatcherRepository matcherRepository;
+    private final MatcherRepository matcherRepository;
 
-    private OntologyService ontologyService;
+    private final OntologyService ontologyService;
 
-    private RestTemplate restTemplate;
+    private final OntologyProfileService ontologyProfileService;
 
-    private AlignmentRepository alignmentRepository;
+    private final OntologyRepository ontologyRepository;
 
-    private ApplicationProperties properties;
+    private final RestTemplate restTemplate;
 
-    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties) {
+    private final AlignmentRepository alignmentRepository;
+
+    private final ApplicationProperties properties;
+
+    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, OntologyProfileService ontologyProfileService, OntologyRepository ontologyRepository, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties) {
         this.matcherRepository = matcherRepository;
         this.ontologyService = ontologyService;
+        this.ontologyProfileService = ontologyProfileService;
+        this.ontologyRepository = ontologyRepository;
         this.restTemplate = restTemplate;
         this.alignmentRepository = alignmentRepository;
         this.properties = properties;
     }
 
-    public Alignment align(String ontology1Path, String ontology2Path, String matcherName) throws InvalidOntologyFileException, MatcherNotFoundException, AlignmentException {
+    public Alignment align(URI ontology1Path, URI ontology2Path, String matcherName) throws InvalidOntologyFileException, MatcherNotFoundException, AlignmentException {
 
-        Ontology ontology1 = ontologyService.loadOntology(ontology1Path);
-        Ontology ontology2 = ontologyService.loadOntology(ontology2Path);
+        Ontology ontology1 = ontologyRepository.findByFile(ontology1Path);
+        if (ontology1 == null) ontology1 = ontologyService.loadOntology(ontology1Path.toString());
+        if (ontology1 != null && ontology1.getProfile() == null) ontology1 = ontologyProfileService.generateOntologyProfile(ontology1.getId());
+
+        Ontology ontology2 = ontologyRepository.findByFile(ontology2Path);
+        if(ontology2 == null) ontology2 = ontologyService.loadOntology(ontology2Path.toString());
+        if (ontology2 != null && ontology2.getProfile() == null) ontology2 = ontologyProfileService.generateOntologyProfile(ontology2.getId());
 
         Matcher matcher = matcherRepository.findByName(matcherName);
 
@@ -79,8 +70,8 @@ public class AlignmentService {
         }
 
         MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-        parameters.add("source", ontology1Path);
-        parameters.add("target", ontology2Path);
+        parameters.add("source", ontology1Path.toString());
+        parameters.add("target", ontology2Path.toString());
 
         for(Map.Entry<String, Object> configParameter : matcher.getConfigurationParameters().entrySet() ) {
             parameters.add(configParameter.getKey(), configParameter.getValue());

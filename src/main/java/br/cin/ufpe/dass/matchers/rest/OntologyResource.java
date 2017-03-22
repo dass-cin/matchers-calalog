@@ -50,6 +50,7 @@ public class OntologyResource {
         Ontology ontology = null;
         try {
             ontology = ontologyService.loadOntology(path);
+            ontology = ontologyProfileService.generateOntologyProfile(ontology.getId());
         } catch (InvalidOntologyFileException e) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("ontology", "ontology-import-failed", String.format("Invalid ontology file path [%s]", path))).body(null);
         }

@@ -8,6 +8,7 @@ import br.cin.ufpe.dass.matchers.service.AlignmentService;
 import br.cin.ufpe.dass.matchers.service.OntologyService;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
 import org.semanticweb.owl.align.AlignmentException;
+import org.semanticweb.owlapi.model.IRI;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class AlignmentResource {
         Alignment alignment = null;
 
         try {
-            alignment = alignmentService.align(ontology1Path, ontology2Path, matcher);
+            alignment = alignmentService.align(IRI.create(ontology1Path).toURI(), IRI.create(ontology2Path).toURI(), matcher);
         } catch (InvalidOntologyFileException e) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("ontology", "invalid-ontology", "Invalid ontology to align")).body(null);
         } catch (MatcherNotFoundException e) {
