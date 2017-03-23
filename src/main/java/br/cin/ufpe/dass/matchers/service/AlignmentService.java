@@ -6,6 +6,7 @@ import br.cin.ufpe.dass.matchers.core.Alignment;
 import br.cin.ufpe.dass.matchers.exception.AlignmentNotFoundException;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.exception.MatcherNotFoundException;
+import br.cin.ufpe.dass.matchers.repository.AlignmentEvaluationRepository;
 import br.cin.ufpe.dass.matchers.repository.AlignmentRepository;
 import br.cin.ufpe.dass.matchers.repository.MatcherRepository;
 import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
@@ -19,7 +20,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
 import java.net.URI;
 import java.util.Map;
 import java.util.Properties;
@@ -44,7 +44,9 @@ public class AlignmentService {
 
     private final ApplicationProperties properties;
 
-    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, OntologyProfileService ontologyProfileService, OntologyRepository ontologyRepository, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties) {
+    private final AlignmentEvaluationRepository alignmentEvaluationRepository;
+
+    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, OntologyProfileService ontologyProfileService, OntologyRepository ontologyRepository, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties, AlignmentEvaluationRepository alignmentEvaluationRepository) {
         this.matcherRepository = matcherRepository;
         this.ontologyService = ontologyService;
         this.ontologyProfileService = ontologyProfileService;
@@ -52,6 +54,7 @@ public class AlignmentService {
         this.restTemplate = restTemplate;
         this.alignmentRepository = alignmentRepository;
         this.properties = properties;
+        this.alignmentEvaluationRepository = alignmentEvaluationRepository;
     }
 
     public Alignment align(URI ontology1Path, URI ontology2Path, String matcherName) throws InvalidOntologyFileException, MatcherNotFoundException, AlignmentException {
@@ -92,7 +95,7 @@ public class AlignmentService {
 
     }
 
-    public Properties evaluate(String alignmentId, String referenceAlignmentFile) throws AlignmentNotFoundException, AlignmentException {
+    public AlignmentEvaluation evaluate(String alignmentId, String referenceAlignmentFile) throws AlignmentNotFoundException, AlignmentException {
         Alignment alignmentToEvaluate = alignmentRepository.findOne(alignmentId);
         if (alignmentToEvaluate == null) {
             throw new AlignmentNotFoundException(String.format("Alignment with id %s not found", alignmentId));
@@ -108,7 +111,25 @@ public class AlignmentService {
         evaluator = new PRecEvaluator(referenceAlignment, alignmentToEvaluate.toURIAlignment() );
         evaluator.eval(p);
 
-        return evaluator.getResults();
+        Properties results = evaluator.getResults();
+
+        AlignmentEvaluation evaluation = alignmentEvaluationRepository.findByEvaluatedAlignment(alignmentToEvaluate);
+        if (evaluation == null) {
+            evaluation = new AlignmentEvaluation();
+            evaluation.getMetrics().setPrecision(Double.parseDouble(results.getProperty("precision")));
+            evaluation.getMetrics().setRecall(Double.parseDouble(results.getProperty("recall")));
+            evaluation.getMetrics().setOverall(Double.parseDouble(results.getProperty("overall")));
+            evaluation.getMetrics().setFmeasure(Double.parseDouble(results.getProperty("fmeasure")));
+            evaluation.getMetrics().setCorrespondencesExpected(Long.parseLong(results.getProperty("nbexpected")));
+            evaluation.getMetrics().setCorrespondencesFound(Long.parseLong(results.getProperty("nbfound")));
+            evaluation.getMetrics().setTruePositives(Long.parseLong(results.getProperty("true positive")));
+            evaluation.setReferenceAlignmentFile(URI.create(referenceAlignmentFile));
+            evaluation.setEvaluatedAlignment(alignmentToEvaluate);
+            evaluation.setMatcher(alignmentToEvaluate.getMatcher());
+            alignmentEvaluationRepository.save(evaluation);
+        }
+
+        return evaluation;
 
     }
 

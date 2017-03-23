@@ -69,7 +69,7 @@ public class Alignment {
         URIAlignment uriAlignment = new URIAlignment();
         for (Correspondence correspondence : this.correspondences) {
             BasicCell basicCell = correspondence.toBasicCell();
-            uriAlignment.addAlignCell(basicCell.getId(), basicCell.getObject2(), basicCell.getObject1(), basicCell.getRelation(), basicCell.getStrength());
+            uriAlignment.addAlignCell(basicCell.getId(), basicCell.getObject1(), basicCell.getObject2(), basicCell.getRelation(), basicCell.getStrength());
         }
         uriAlignment.setOntology1(ontology1.getFile());
         uriAlignment.setOntology2(ontology2.getFile());

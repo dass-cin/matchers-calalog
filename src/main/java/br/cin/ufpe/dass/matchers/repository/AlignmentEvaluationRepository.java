@@ -15,4 +15,6 @@ public interface AlignmentEvaluationRepository extends MongoRepository<Alignment
 
     public Set<AlignmentEvaluation> findByMatcher(Matcher matcher);
 
+    public AlignmentEvaluation findByEvaluatedAlignment(Alignment evaluatedAlignment);
+
 }

@@ -1,48 +1,27 @@
 package br.cin.ufpe.dass.matchers.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+
+import java.net.URI;
 
 /**
  * Created by diego on 08/03/17.
  */
 public class AlignmentEvaluation {
 
+    private AlignmentMetrics metrics = new AlignmentMetrics();
+
+    @DBRef
+    @Indexed(unique = true)
+    @JsonIgnore
     private Alignment evaluatedAlignment;
 
-    private Alignment referenceAlignment; //@TODO implementar carregamento do arquivo para o objeto Alignment
-
-    private double precision;
-
-    private double recall;
-
-    private double fmeasure;
+    private URI referenceAlignmentFile; //@TODO implementar carregamento do arquivo para o objeto Alignment
 
     @DBRef
     private Matcher matcher;
-
-    public double getPrecision() {
-        return precision;
-    }
-
-    public void setPrecision(double precision) {
-        this.precision = precision;
-    }
-
-    public double getRecall() {
-        return recall;
-    }
-
-    public void setRecall(double recall) {
-        this.recall = recall;
-    }
-
-    public double getFmeasure() {
-        return fmeasure;
-    }
-
-    public void setFmeasure(double fmeasure) {
-        this.fmeasure = fmeasure;
-    }
 
     public Alignment getEvaluatedAlignment() {
         return evaluatedAlignment;
@@ -52,12 +31,20 @@ public class AlignmentEvaluation {
         this.evaluatedAlignment = evaluatedAlignment;
     }
 
-    public Alignment getReferenceAlignment() {
-        return referenceAlignment;
+    public URI getReferenceAlignmentFile() {
+        return referenceAlignmentFile;
     }
 
-    public void setReferenceAlignment(Alignment referenceAlignment) {
-        this.referenceAlignment = referenceAlignment;
+    public void setReferenceAlignmentFile(URI referenceAlignmentFile) {
+        this.referenceAlignmentFile = referenceAlignmentFile;
+    }
+
+    public AlignmentMetrics getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(AlignmentMetrics metrics) {
+        this.metrics = metrics;
     }
 
     public Matcher getMatcher() {
