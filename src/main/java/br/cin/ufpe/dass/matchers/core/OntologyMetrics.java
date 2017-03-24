@@ -20,7 +20,7 @@ public class OntologyMetrics {
     float avgPopulation;
     float nullCommentPerc;
     float nullLabelPerc;
-    float diffLabelLocPerc;
+    float labelUniqueness;
 
     public float getRelationshipRichness() {
         return relationshipRichness;
@@ -94,12 +94,12 @@ public class OntologyMetrics {
         this.nullLabelPerc = nullLabelPerc;
     }
 
-    public float getDiffLabelLocPerc() {
-        return diffLabelLocPerc;
+    public float getLabelUniqueness() {
+        return labelUniqueness;
     }
 
-    public void setDiffLabelLocPerc(float diffLabelLocPerc) {
-        this.diffLabelLocPerc = diffLabelLocPerc;
+    public void setLabelUniqueness(float labelUniqueness) {
+        this.labelUniqueness = labelUniqueness;
     }
 
     public float getAvgDepth() {

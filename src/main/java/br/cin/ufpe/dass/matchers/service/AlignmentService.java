@@ -60,11 +60,11 @@ public class AlignmentService {
     public Alignment align(URI ontology1Path, URI ontology2Path, String matcherName) throws InvalidOntologyFileException, MatcherNotFoundException, AlignmentException {
 
         Ontology ontology1 = ontologyRepository.findByFile(ontology1Path);
-        if (ontology1 == null) ontology1 = ontologyService.loadOntology(ontology1Path.toString());
+        if (ontology1 == null) ontology1 = ontologyService.loadOntology(ontology1);
         if (ontology1 != null && ontology1.getProfile() == null) ontology1 = ontologyProfileService.generateOntologyProfile(ontology1.getId());
 
         Ontology ontology2 = ontologyRepository.findByFile(ontology2Path);
-        if(ontology2 == null) ontology2 = ontologyService.loadOntology(ontology2Path.toString());
+        if(ontology2 == null) ontology2 = ontologyService.loadOntology(ontology2);
         if (ontology2 != null && ontology2.getProfile() == null) ontology2 = ontologyProfileService.generateOntologyProfile(ontology2.getId());
 
         Matcher matcher = matcherRepository.findByName(matcherName);

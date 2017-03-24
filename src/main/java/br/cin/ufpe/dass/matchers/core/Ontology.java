@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,10 @@ public class Ontology {
 
     private String formalism;
 
+    @NotNull
+    private String domain;
+
+    @NotNull
     @Indexed(unique = true)
     private URI file;
 
@@ -90,4 +95,11 @@ public class Ontology {
         this.description = description;
     }
 
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 }

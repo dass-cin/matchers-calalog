@@ -36,28 +36,23 @@ public class OntologyService {
 
     /**
      * Loads a local ontology (from file) to database
-     * @param path
+     * @param ontology Ontology
      * @throws InvalidOntologyFileException
      */
-    public Ontology loadOntology(String path) throws InvalidOntologyFileException {
+    public Ontology loadOntology(Ontology ontology) throws InvalidOntologyFileException {
 
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        IRI iri = IRI.create(new File(FormatHelper.formatFilePathToApi(path, true)));
+        IRI iri = IRI.create(FormatHelper.formatFilePathToApi(ontology.getFile().toString(), true));
 
         Ontology localOntology = repository.findByUri(iri.toURI().toString());
         if (localOntology == null) {
-
-            try {
-                OWLOntology ontology = manager.loadOntologyFromOntologyDocument(iri);
-                localOntology = new Ontology();
-                localOntology.setUri(iri.toURI());
-                localOntology.setFile(IRI.create(path).toURI());
-                repository.save(localOntology);
-            } catch (OWLOntologyCreationException e) {
-                System.out.println(FormatHelper.formatFilePathToApi(path, true));
-                e.printStackTrace();
-                throw new InvalidOntologyFileException(new File(path));
-            }
+            localOntology = new Ontology();
+            localOntology.setDomain(ontology.getDomain());
+            localOntology.setFormalism(ontology.getFormalism());
+            localOntology.setUri(iri.toURI());
+            localOntology.setDescription(ontology.getDescription());
+            localOntology.setFile(IRI.create(ontology.getFile()).toURI());
+            repository.save(localOntology);
         }
 
         return localOntology;

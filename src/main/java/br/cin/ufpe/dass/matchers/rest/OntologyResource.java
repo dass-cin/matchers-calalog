@@ -46,13 +46,12 @@ public class OntologyResource {
     }
 
     @PostMapping("/ontologies")
-    public ResponseEntity<Ontology> importOntology(@RequestBody String path) {
-        Ontology ontology = null;
+    public ResponseEntity<Ontology> importOntology(@RequestBody Ontology ontology) {
         try {
-            ontology = ontologyService.loadOntology(path);
+            ontology = ontologyService.loadOntology(ontology);
             ontology = ontologyProfileService.generateOntologyProfile(ontology.getId());
         } catch (InvalidOntologyFileException e) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("ontology", "ontology-import-failed", String.format("Invalid ontology file path [%s]", path))).body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("ontology", "ontology-import-failed", String.format("Invalid ontology file path [%s]", ontology.getFile()))).body(null);
         }
         return ResponseEntity.ok().body(ontology);
     }

@@ -55,13 +55,11 @@ public class OntologyProfileService {
 
         for(OntProperty prop: model.listDatatypeProperties().toList()){
             if(prop.isAnon()) continue;
-//            if(!prop.getURI().startsWith(ontology.getURI().toString())) continue;
             profile.setDataProperties(profile.getDataProperties()+1);
         }
 
         for(OntProperty prop: model.listObjectProperties().toList()){
             if(prop.isAnon()) continue;
-//            if(!prop.getURI().startsWith(ontology.getURI().toString())) continue;
             profile.setObjectProperties(profile.getObjectProperties()+1);
         }
 
@@ -147,16 +145,37 @@ public class OntologyProfileService {
     private OntologyMetrics calculateMetrics(Ontology ontology, OntologyProfile profile) {
         OntologyMetrics metrics = new OntologyMetrics();
 
+        //Percentage of relations (object properties) at the schema level that are different from subClassOf relations.
         metrics.setRelationshipRichness((float)profile.getOtherRelations()/(profile.getOtherRelations()+profile.getTotalSubClassesOf()));
+
+        //Average number of attributes per class
         metrics.setAttributeRichness((float)profile.getAttributes()/profile.getClasses());
+
+        //Average number of subclasses per class
         metrics.setInheritanceRichness((float)profile.getTotalSubClassesOf() / profile.getTotalElements());
+
+        //Ratio of the number of classes for which instances exists by the total number of classes (use instances)
         metrics.setClassRichness((float)profile.getClassesWithInstances() / profile.getClasses());
+
+        //Percentage of terms that have a label that differs from their local name
+        metrics.setLabelUniqueness((float)profile.getDiffLabelLocalName() / profile.getTotalElements());
+
+        //Average distribution of instances across all the classes (use instances)
         metrics.setAvgPopulation((float)profile.getInstancesNumber() / profile.getClasses());
-        metrics.setDiffLabelLocPerc((float)profile.getDiffLabelLocalName() / profile.getTotalElements());
+
+        //Average depth of the classes
         metrics.setAvgDepth(profile.getAvgDepth());
+
+        //Number of labels present in Wordnet
         metrics.setLabelWordnet((float)calculateWordnetCoverage(ontology, WordnetType.LABELS));
+
+        //Number of local names present in Wordnet
         metrics.setLocalWordnet((float)calculateWordnetCoverage(ontology, WordnetType.LOCALNAMES));
+
+        //Percentage of terms with no comment
         metrics.setNullCommentPerc((float)profile.getNullComments() / profile.getTotalElements());
+
+        //Percentage of terms with no label
         metrics.setNullLabelPerc((float)profile.getNullLabels() / profile.getTotalElements());
 
         return metrics;
