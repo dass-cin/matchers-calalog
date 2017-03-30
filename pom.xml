@@ -136,6 +136,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>wrapper-only</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<classifier>dtos-only</classifier>
+							<includes>
+								<include>br/cin/ufpe/dass/matchers/core/*</include>
+								<include>br/cin/ufpe/dass/matchers/wrapper/*</include>
+							</includes>
+							<excludes>
+								<exclude>*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

@@ -1,5 +1,7 @@
 package br.cin.ufpe.dass.yamwrapper.rest;
 
+import br.cin.ufpe.dass.matchers.core.Alignment;
+import br.cin.ufpe.dass.matchers.util.HeaderUtil;
 import br.cin.ufpe.dass.yamwrapper.MatcherParameters;
 import br.cin.ufpe.dass.yamwrapper.service.YAMWrapperService;
 import org.slf4j.Logger;
@@ -28,16 +30,17 @@ public class YAMWrapperResource {
     }
 
     @PostMapping("/match")
-    public ResponseEntity<Void> match(@RequestBody MatcherParameters matcherParameters) {
+    public ResponseEntity<Alignment> match(@RequestBody MatcherParameters matcherParameters) {
+
+        Alignment alignment = null;
 
         try {
-            yamWrapperService.match(matcherParameters.getSource(), matcherParameters.getTarget());
+            alignment = yamWrapperService.match(matcherParameters.getSource(), matcherParameters.getTarget());
         } catch (IOException e) {
             logger.error("ioexception", e);
-            e.printStackTrace();
+            ResponseEntity.badRequest().body(null);
         }
 
-
-        return null;
+        return ResponseEntity.ok().body(alignment);
     }
 }

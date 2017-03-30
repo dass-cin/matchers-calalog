@@ -72,8 +72,8 @@ public class MatcherProfileResource {
             matcherProfile.getComplianceMetrics().setRecall(recall / totalEvaluations);
             matcherProfile.getComplianceMetrics().setFmeasure(fmeasure / totalEvaluations);
             matcherProfile.getComplianceMetrics().setOverall(overall / totalEvaluations);
-            matcherProfile.getComplianceMetrics().setCorrespondencesFound(cFound / totalEvaluations);
-            matcherProfile.getComplianceMetrics().setCorrespondencesExpected(cExpected / totalEvaluations);
+            matcherProfile.getComplianceMetrics().setCorrespondencesFound(cFound);
+            matcherProfile.getComplianceMetrics().setCorrespondencesExpected(cExpected);
 
             matcherProfileRepository.save(matcherProfile);
 

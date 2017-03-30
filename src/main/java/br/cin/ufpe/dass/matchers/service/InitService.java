@@ -121,11 +121,12 @@ public class InitService {
                     for (int j = 0; j < ontologies.size(); j++) {
                         Ontology source = ontologies.get(i);
                         Ontology target = ontologies.get(j);
-                        Alignment existingAlignment1 = alignmentRepository.findByOntology1AndOntology2(source, target);
-                        Alignment existingAlignment2 = alignmentRepository.findByOntology1AndOntology2(target, source);
+                        Alignment existingAlignment1 = alignmentRepository.findByOntology1AndOntology2AndMatcher(source, target, matcher);
+                        Alignment existingAlignment2 = alignmentRepository.findByOntology1AndOntology2AndMatcher(target, source, matcher);
                         if (domain.equals("anatomy") && source.getDescription().equals("human")) continue;
                         if (!source.equals(target) && existingAlignment1 == null && existingAlignment2 == null) {
                             try {
+                                log.info(String.format("starting alignment between %s and %s with matcher %s", source.getDescription(), target.getDescription(), matcher.getName()));
                                 Alignment alignment = alignmentService.align(source.getFile(), target.getFile(), matcher.getName());
                                 if (alignment != null) {
                                     String sourceFile = Paths.get(alignment.getOntology1().getFile()).getFileName().toString().replaceAll(".owl", "");
@@ -160,6 +161,7 @@ public class InitService {
                 }
             }
         });
+        log.info("initialization finished");
     }
 
 }

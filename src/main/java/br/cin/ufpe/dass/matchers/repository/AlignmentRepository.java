@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface AlignmentRepository extends MongoRepository<Alignment, String> {
 
-    public Alignment findByOntology1AndOntology2(Ontology ontology1, Ontology ontology2);
+    public Alignment findByOntology1AndOntology2AndMatcher(Ontology ontology1, Ontology ontology2, Matcher matcher);
 
     public Set<Alignment> findByMatcher(Matcher matcher);
 

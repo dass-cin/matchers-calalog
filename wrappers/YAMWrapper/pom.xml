@@ -51,8 +51,18 @@
 		</dependency>
 
 
-		<!-- COMA -->
-
+		<dependency>
+			<groupId>br.cin.ufpe.dass</groupId>
+			<artifactId>matchers-catalog</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<classifier>dtos-only</classifier>
+			<exclusions>
+				<exclusion>
+					<artifactId>*</artifactId>
+					<groupId>*</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 		<dependency>
 			<!-- be aware: this library is not in the maven repository but in the parent lib folder -->

@@ -1,12 +1,20 @@
 package br.cin.ufpe.dass.yamwrapper.service;
 
+import br.cin.ufpe.dass.matchers.core.Alignment;
+import br.cin.ufpe.dass.matchers.core.Correspondence;
 import org.apache.log4j.spi.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
+import java.util.Iterator;
 
+import yamSS.datatypes.mapping.GMapping;
+import yamSS.datatypes.mapping.GMappingScore;
+import yamSS.datatypes.mapping.GMappingTable;
+import yamSS.loader.ontology.OntoBuffer;
 import yamSS.main.oaei.run.YAM;
 
 /**
@@ -21,59 +29,34 @@ public class YAMWrapperService {
         this.yam = yam;
     }
 
-    public void match(String source, String target) throws IOException {
+    public Alignment match(String source, String target) throws IOException {
 
         long startDate = System.currentTimeMillis();
 
-        String alignmentString = yam.align(source.replaceAll("file://", ""), target.replaceAll("file://", ""));
-        System.out.println("Alignment = "+alignmentString);
 
-        File alignmentFile = File.createTempFile("alignment", ".rdf");
-        FileWriter fw = new FileWriter(alignmentFile);
-        fw.write(alignmentString);
-        fw.flush();
-        fw.close();
+        OntoBuffer onto1 = new OntoBuffer(source.replaceAll("file://", ""));
+        OntoBuffer onto2 = new OntoBuffer(target.replaceAll("file://", ""));
 
+        GMappingTable<String> alignmentString = yam.align(onto1,onto2);
 
+        long endDate = System.currentTimeMillis();
 
-//
-//        COMA_API coma_api = new COMA_API();
-//        Alignment alignment = new Alignment();
-//
-//        try {
-//            MatchResult result = coma_api.matchModels(source,
-//                    target, resolution, similarityMeasure);
-//
-//            long endDate = System.currentTimeMillis();
-//
-//            alignment.setExecutionTimeInMillis(endDate - startDate);
-//
-//            TreeMap<Integer, Element> indexedSourceElements = new TreeMap<Integer, Element>();
-//            for(Object sourceElementObject : result.getSrcMatchObjects()) {
-//                Element sourceElement = (Element)sourceElementObject;
-//                indexedSourceElements.put(sourceElement.getId(), sourceElement);
-//            }
-//
-//            TreeMap<Integer, Element> indexedTargetElements = new TreeMap<Integer, Element>();
-//            for(Object targetElementObject : result.getTrgMatchObjects()) {
-//                Element targetElement = (Element)targetElementObject;
-//                indexedTargetElements.put(targetElement.getId(), targetElement);
-//            }
-//
-//            int counter = 0;
-//            float[][] simMatrix = ((MatchResultArray) result).getSimMatrix();
-//            for (int i=0; i < simMatrix.length; i++) {
-//                for(int j=0; j < simMatrix[i].length; j++) {
-//                    if (simMatrix[i][j] > 0 && indexedSourceElements.get(i+1) != null && indexedTargetElements.get(j+1) != null) {
-//                        Correspondence correspondence = new Correspondence(IRI.create(indexedSourceElements.get(i+1).getAccession()).toURI(), IRI.create(indexedTargetElements.get(j+1).getAccession()).toURI(), "Equivalence", simMatrix[i][j]);
-//                        alignment.addCorrespodence(correspondence);
-//                    }
-//                }
-//            }
-//        } catch (IndexOutOfBoundsException e) {
-//            throw new AlignmentException("fail to execute alignment");
-//        }
+        Iterator<GMapping<String>> it = alignmentString.getIterator();
 
+        Alignment alignment = new Alignment();
+        alignment.setExecutionTimeInMillis(endDate - startDate);
+
+        while(it.hasNext()) {
+            GMappingScore<String> row = (GMappingScore<String>) it.next();
+            Correspondence correspondence = new Correspondence();
+            correspondence.setRelation((row.getRelation().equals("=")?"Equivalence":row.getRelation()));
+            correspondence.setSimilarityValue(row.getSimScore());
+            correspondence.setSourceElement(URI.create(row.getEl1()));
+            correspondence.setTargetElement(URI.create(row.getEl2()));
+            alignment.addCorrespodence(correspondence);
+        }
+
+        return alignment;
 
     }
 
