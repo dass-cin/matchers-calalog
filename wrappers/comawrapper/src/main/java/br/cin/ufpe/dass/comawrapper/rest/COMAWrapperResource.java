@@ -2,6 +2,8 @@ package br.cin.ufpe.dass.comawrapper.rest;
 
 import br.cin.ufpe.dass.comawrapper.service.COMAWrapperService;
 import br.cin.ufpe.dass.matchers.core.Alignment;
+import br.cin.ufpe.dass.matchers.wrapper.MatcherParameters;
+import br.cin.ufpe.dass.matchers.wrapper.WrapperResource;
 import de.wdilab.coma.matching.Resolution;
 import de.wdilab.coma.matching.SimilarityMeasure;
 import org.semanticweb.owl.align.AlignmentException;
@@ -10,13 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 /**
  * Created by diego on 07/03/17.
  */
 @RestController
 @RequestMapping("/api/coma/")
-public class COMAWrapperResource {
+public class COMAWrapperResource implements WrapperResource {
 
     private COMAWrapperService comaWrapperService;
 
@@ -25,13 +28,15 @@ public class COMAWrapperResource {
     }
 
     @PostMapping("/match")
-    public ResponseEntity<Alignment> match(@RequestParam("source") String source,
-                                           @RequestParam("target") String target,
-                                           @RequestParam("resolution") String resolution,
-                                           @RequestParam("measure") String measure) {
+    public ResponseEntity<Alignment> match(@RequestBody MatcherParameters parameters) {
+
 
         int resolutionInt = 0;
         int measureInt = 0;
+
+        String resolution = (String) parameters.getConfigParams().get("resolution");
+        String measure = (String) parameters.getConfigParams().get("measure");
+
 
         try {
             resolutionInt = Resolution.class.getField(resolution).getInt(null);
@@ -51,10 +56,9 @@ public class COMAWrapperResource {
 
         Alignment alignment = null;
         try {
-            alignment = comaWrapperService.match(source, target, resolutionInt, measureInt);
+            alignment = comaWrapperService.match(parameters.getSource(), parameters.getTarget(), resolutionInt, measureInt);
         } catch (AlignmentException | UnsupportedEncodingException e) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal error while building alignment");
-            e.printStackTrace();
         }
 
         if (alignment == null) {

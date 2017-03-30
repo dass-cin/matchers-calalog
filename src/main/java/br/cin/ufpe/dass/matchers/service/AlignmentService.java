@@ -6,15 +6,15 @@ import br.cin.ufpe.dass.matchers.core.Alignment;
 import br.cin.ufpe.dass.matchers.exception.AlignmentNotFoundException;
 import br.cin.ufpe.dass.matchers.exception.InvalidOntologyFileException;
 import br.cin.ufpe.dass.matchers.exception.MatcherNotFoundException;
-import br.cin.ufpe.dass.matchers.repository.AlignmentEvaluationRepository;
-import br.cin.ufpe.dass.matchers.repository.AlignmentRepository;
-import br.cin.ufpe.dass.matchers.repository.MatcherRepository;
-import br.cin.ufpe.dass.matchers.repository.OntologyRepository;
+import br.cin.ufpe.dass.matchers.repository.*;
+import br.cin.ufpe.dass.matchers.wrapper.MatcherParameters;
 import fr.inrialpes.exmo.align.impl.eval.PRecEvaluator;
 import fr.inrialpes.exmo.align.parser.AlignmentParser;
 import org.semanticweb.owl.align.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -46,7 +46,9 @@ public class AlignmentService {
 
     private final AlignmentEvaluationRepository alignmentEvaluationRepository;
 
-    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, OntologyProfileService ontologyProfileService, OntologyRepository ontologyRepository, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties, AlignmentEvaluationRepository alignmentEvaluationRepository) {
+    private final CorrespondenceRepository correspondenceRepository;
+
+    public AlignmentService(MatcherRepository matcherRepository, OntologyService ontologyService, OntologyProfileService ontologyProfileService, OntologyRepository ontologyRepository, RestTemplate restTemplate, AlignmentRepository alignmentRepository, ApplicationProperties properties, AlignmentEvaluationRepository alignmentEvaluationRepository, CorrespondenceRepository correspondenceRepository) {
         this.matcherRepository = matcherRepository;
         this.ontologyService = ontologyService;
         this.ontologyProfileService = ontologyProfileService;
@@ -55,9 +57,13 @@ public class AlignmentService {
         this.alignmentRepository = alignmentRepository;
         this.properties = properties;
         this.alignmentEvaluationRepository = alignmentEvaluationRepository;
+        this.correspondenceRepository = correspondenceRepository;
     }
 
     public Alignment align(URI ontology1Path, URI ontology2Path, String matcherName) throws InvalidOntologyFileException, MatcherNotFoundException, AlignmentException {
+
+        if (!ontology1Path.toString().startsWith("file://")) ontology1Path = URI.create("file://"+ontology1Path.toString());
+        if (!ontology2Path.toString().startsWith("file://")) ontology2Path = URI.create("file://"+ontology2Path.toString());
 
         Ontology ontology1 = ontologyRepository.findByFile(ontology1Path);
         if (ontology1 == null) ontology1 = ontologyService.loadOntology(ontology1);
@@ -73,25 +79,31 @@ public class AlignmentService {
             throw new MatcherNotFoundException(String.format("Matcher with name %s not found", matcherName));
         }
 
-        MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-        parameters.add("source", ontology1Path.toString());
-        parameters.add("target", ontology2Path.toString());
+        MatcherParameters matcherParameters = new MatcherParameters();
+        matcherParameters.setSource(ontology1Path.toString());
+        matcherParameters.setTarget(ontology2Path.toString());
 
         for(Map.Entry<String, Object> configParameter : matcher.getConfigurationParameters().entrySet() ) {
-            parameters.add(configParameter.getKey(), configParameter.getValue());
+            matcherParameters.getConfigParams().put(configParameter.getKey(), configParameter.getValue());
         }
 
-        final HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(parameters,null);
+        final HttpEntity<MatcherParameters> entity = new HttpEntity<>(matcherParameters);
 
-        Alignment alignment = restTemplate.exchange(matcher.getEndPoint() + "/match", HttpMethod.POST, entity, Alignment.class).getBody();
+        ResponseEntity<Alignment> response = restTemplate.exchange(matcher.getEndPoint() + "/match", HttpMethod.POST, entity, Alignment.class);
 
-        alignment.setOntology1(ontology1);
-        alignment.setOntology2(ontology2);
-        alignment.setMatcher(matcher);
+        if (response.getBody() != null && response.getStatusCode() == HttpStatus.OK) {
+            Alignment alignment = response.getBody();
+            alignment.setOntology1(ontology1);
+            alignment.setOntology2(ontology2);
+            alignment.setMatcher(matcher);
+            alignment.getCorrespondences().forEach((correspondence -> {
+                correspondenceRepository.save(correspondence);
+            }));
+            alignmentRepository.save(alignment);
+            return alignment;
+        }
 
-        alignmentRepository.save(alignment);
-
-        return alignment;
+        return null;
 
     }
 

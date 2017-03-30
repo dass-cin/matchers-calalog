@@ -60,6 +60,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>br.cin.ufpe.dass</groupId>
+			<artifactId>matchers-catalog</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
 			<!-- be aware: this library is not in the maven repository but in the parent lib folder -->
 			<groupId>org.apache.mahout.hadoop</groupId>
 			<artifactId>hadoop-core</artifactId>
@@ -217,12 +224,6 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>21.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>br.cin.ufpe.dass</groupId>
-			<artifactId>matchers-catalog</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>

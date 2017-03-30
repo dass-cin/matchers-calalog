@@ -1,36 +1,21 @@
 package br.cin.ufpe.dass.matchers;
 
 import br.cin.ufpe.dass.matchers.config.ApplicationProperties;
-import br.cin.ufpe.dass.matchers.core.Matcher;
-import br.cin.ufpe.dass.matchers.repository.MatcherRepository;
+import br.cin.ufpe.dass.matchers.service.InitService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.convert.converter.Converter;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.convert.CustomConversions;
-import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.UnknownHostException;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static java.time.ZoneId.systemDefault;
-import static java.time.ZonedDateTime.ofInstant;
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties.class)
@@ -38,13 +23,18 @@ public class MatchersCatalogApplication implements CommandLineRunner {
 
 	private static Logger log = LoggerFactory.getLogger(MatchersCatalogApplication.class);
 
+	@Autowired
+	private InitService initService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(MatchersCatalogApplication.class, args);
-
 	}
 
 	@Override
 	public void run(String... strings) throws Exception {
+//		initService.loadMatchers();
+//		initService.loadOntologies();
+//		initService.generateAlignments();
 	}
 
 	@Bean

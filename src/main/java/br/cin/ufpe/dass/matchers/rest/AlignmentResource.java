@@ -9,6 +9,7 @@ import br.cin.ufpe.dass.matchers.service.OntologyService;
 import br.cin.ufpe.dass.matchers.util.HeaderUtil;
 import org.semanticweb.owl.align.AlignmentException;
 import org.semanticweb.owlapi.model.IRI;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +47,10 @@ public class AlignmentResource {
             e.printStackTrace();
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("matcher", "matcher-exception", "Matcher Exception")).body(null);
 
+        }
+
+        if (alignment == null) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         return ResponseEntity.ok().body(alignment);
