@@ -22,6 +22,22 @@ public class OntologyMetrics {
     float nullLabelPerc;
     float labelUniqueness;
 
+    public float getSyntacticMetricsAvg() {
+        return (attributeRichness+labelUniqueness+nullLabelPerc+nullCommentPerc)/4;
+    }
+
+    public float getLexicalMetricsAvg() {
+        return (labelWordnet+localWordnet)/2;
+    }
+
+    public float getStructuralMetricsAvg() {
+        return (relationshipRichness+attributeRichness+inheritanceRichness)/3;
+    }
+
+    public float getInstanceMetricsAvg() {
+        return (classRichness+avgPopulation)/2;
+    }
+
     public float getRelationshipRichness() {
         return relationshipRichness;
     }
