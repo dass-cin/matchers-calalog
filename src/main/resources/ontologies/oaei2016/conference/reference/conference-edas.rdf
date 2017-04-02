@@ -18,7 +18,7 @@
 				</Ontology>
 				</onto2>
 							<map>
-								<Cell cid='3'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Person'/>
 									<entity2 rdf:resource='http://edas#Person'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -26,7 +26,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='4'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_participant'/>
 									<entity2 rdf:resource='http://edas#Attendee'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -34,7 +34,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='5'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Organization'/>
 									<entity2 rdf:resource='http://edas#Organization'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -42,7 +42,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='6'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Reviewer'/>
 									<entity2 rdf:resource='http://edas#Reviewer'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -50,7 +50,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='7'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#has_the_first_name'/>
 									<entity2 rdf:resource='http://edas#hasFirstName'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -58,7 +58,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='8'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_part'/>
 									<entity2 rdf:resource='http://edas#ConferenceEvent'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -66,7 +66,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='9'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Workshop'/>
 									<entity2 rdf:resource='http://edas#Workshop'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -74,7 +74,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='10'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_document'/>
 									<entity2 rdf:resource='http://edas#Document'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -82,7 +82,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='11'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Paper'/>
 									<entity2 rdf:resource='http://edas#Paper'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -90,7 +90,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='12'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#has_a_review_expertise'/>
 									<entity2 rdf:resource='http://edas#hasRating'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -98,7 +98,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='13'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#has_the_last_name'/>
 									<entity2 rdf:resource='http://edas#hasLastName'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -106,7 +106,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='14'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Review'/>
 									<entity2 rdf:resource='http://edas#Review'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -114,7 +114,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='15'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_volume'/>
 									<entity2 rdf:resource='http://edas#Conference'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -122,7 +122,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='16'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Rejected_contribution'/>
 									<entity2 rdf:resource='http://edas#RejectedPaper'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -130,7 +130,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='17'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Topic'/>
 									<entity2 rdf:resource='http://edas#Topic'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -138,7 +138,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='18'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Accepted_contribution'/>
 									<entity2 rdf:resource='http://edas#AcceptedPaper'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -146,7 +146,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='19'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Regular_author'/>
 									<entity2 rdf:resource='http://edas#Author'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>

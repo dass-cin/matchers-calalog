@@ -17,7 +17,7 @@
 				  <location>http://nb.vse.cz/~svabo/oaei2010/iasted.owl</location>
 				</Ontology>
 				</onto2>		<map>
-								<Cell cid='99'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Passive_conference_participant'/>
 									<entity2 rdf:resource='http://iasted#Listener'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -25,7 +25,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='98'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Active_conference_participant'/>
 									<entity2 rdf:resource='http://iasted#Speaker'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -33,7 +33,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='1'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Reviewer'/>
 									<entity2 rdf:resource='http://iasted#Reviewer'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -41,7 +41,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='2'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Person'/>
 									<entity2 rdf:resource='http://iasted#Person'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -49,7 +49,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='3'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Regular_author'/>
 									<entity2 rdf:resource='http://iasted#Author'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -57,7 +57,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='4'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_fees'/>
 									<entity2 rdf:resource='http://iasted#Fee'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -65,7 +65,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='5'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Tutorial'/>
 									<entity2 rdf:resource='http://iasted#Tutorial'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -73,7 +73,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='6'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#contributes'/>
 									<entity2 rdf:resource='http://iasted#write'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -81,7 +81,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='7'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Review'/>
 									<entity2 rdf:resource='http://iasted#Review'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -89,7 +89,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='8'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_document'/>
 									<entity2 rdf:resource='http://iasted#Document'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -97,7 +97,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='9'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_part'/>
 									<entity2 rdf:resource='http://iasted#Conference_activity'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -105,7 +105,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='10'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Submitted_contribution'/>
 									<entity2 rdf:resource='http://iasted#Submission'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -113,7 +113,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='11'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Camera_ready_contribution'/>
 									<entity2 rdf:resource='http://iasted#Final_manuscript'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -121,7 +121,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='12'>
+								<Cell>
 									<entity1 rdf:resource='http://conference#Conference_proceedings'/>
 									<entity2 rdf:resource='http://iasted#Publication'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>

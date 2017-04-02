@@ -18,7 +18,7 @@
 				</Ontology>
 				</onto2>
 							<map>
-								<Cell cid='1'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Place'/>
 									<entity2 rdf:resource='http://sigkdd#Place'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -26,7 +26,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='2'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#hasCostAmount'/>
 									<entity2 rdf:resource='http://sigkdd#Price'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -34,7 +34,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='3'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Person'/>
 									<entity2 rdf:resource='http://sigkdd#Person'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -42,7 +42,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='4'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#hasName'/>
 									<entity2 rdf:resource='http://sigkdd#Name_of_conference'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -50,7 +50,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='5'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#ConferenceVenuePlace'/>
 									<entity2 rdf:resource='http://sigkdd#Conference_hall'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -58,7 +58,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='6'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Author'/>
 									<entity2 rdf:resource='http://sigkdd#Author'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -66,7 +66,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='7'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#AccommodationPlace'/>
 									<entity2 rdf:resource='http://sigkdd#Hotel'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -74,7 +74,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='8'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#startDate'/>
 									<entity2 rdf:resource='http://sigkdd#Start_of_conference'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -82,7 +82,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='9'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#ConferenceChair'/>
 									<entity2 rdf:resource='http://sigkdd#General_Chair'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -90,7 +90,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='10'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Conference'/>
 									<entity2 rdf:resource='http://sigkdd#Conference'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -98,7 +98,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='11'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#endDate'/>
 									<entity2 rdf:resource='http://sigkdd#End_of_conference'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -106,7 +106,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='12'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Review'/>
 									<entity2 rdf:resource='http://sigkdd#Review'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -114,7 +114,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='13'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Document'/>
 									<entity2 rdf:resource='http://sigkdd#Document'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -122,7 +122,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='14'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Paper'/>
 									<entity2 rdf:resource='http://sigkdd#Paper'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>
@@ -130,7 +130,7 @@
 								</Cell>
 							</map>
 							<map>
-								<Cell cid='15'>
+								<Cell>
 									<entity1 rdf:resource='http://edas#Attendee'/>
 									<entity2 rdf:resource='http://sigkdd#Listener'/>
 									<measure rdf:datatype='xsd:float'>1.0</measure>

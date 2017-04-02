@@ -50,6 +50,15 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<!-- be aware: this library is not in the maven repository but in the parent lib folder -->
+			<groupId>fr.lirmm</groupId>
+			<artifactId>yam-plus-plus</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/YAM.jar</systemPath>
+		</dependency>
+
 
 		<!-- COMA -->
 		<!-- ############ COMA ############ -->
