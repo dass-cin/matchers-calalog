@@ -1,5 +1,6 @@
 package br.cin.ufpe.dass.matcherswrappers;
 
+import aml.AML;
 import br.cin.ufpe.dass.matchers.config.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,6 +21,11 @@ public class MatchersWrappersApplication {
 	@Bean
 	public YAM yam() {
 		return YAM.getInstance();
+	}
+
+	@Bean
+	public AML aml() {
+		return AML.getInstance();
 	}
 
 }

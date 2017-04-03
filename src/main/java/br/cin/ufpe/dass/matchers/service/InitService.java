@@ -65,6 +65,16 @@ public class InitService {
 
             matcherRepository.save(matcher);
         }
+        if (matcherRepository.findByName("AML") == null) {
+            Matcher matcher = new Matcher();
+            matcher.setName("AML");
+            matcher.setVersion("2.1-SNAPSHOT");
+            matcher.setEndPoint("http://localhost:8081/api/aml");
+            matcher.getConfigurationParameters().put("config", "aml/config.ini");
+            matcher.getConfigurationParameters().put("bkPath", "aml/knowledge/");
+            matcher.getConfigurationParameters().put("mode", "manual");
+            matcherRepository.save(matcher);
+        }
     }
 
 
