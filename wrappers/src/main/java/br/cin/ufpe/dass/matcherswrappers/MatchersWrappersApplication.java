@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import uk.ac.ox.krr.logmap2.LogMap_Full;
 import yamSS.main.oaei.run.YAM;
 
 @SpringBootApplication

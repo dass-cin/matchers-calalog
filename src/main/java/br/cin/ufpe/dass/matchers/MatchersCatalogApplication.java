@@ -32,7 +32,7 @@ public class MatchersCatalogApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-//		initService.loadMatchers();
+		initService.loadMatchers();
 //		initService.loadOntologies();
 //		initService.generateAlignments();
 	}

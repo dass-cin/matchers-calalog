@@ -65,6 +65,7 @@ public class InitService {
 
             matcherRepository.save(matcher);
         }
+
         if (matcherRepository.findByName("AML") == null) {
             Matcher matcher = new Matcher();
             matcher.setName("AML");
@@ -75,6 +76,17 @@ public class InitService {
             matcher.getConfigurationParameters().put("mode", "manual");
             matcherRepository.save(matcher);
         }
+
+        if (matcherRepository.findByName("LogMap") == null) {
+            Matcher matcher = new Matcher();
+            matcher.setName("LogMap");
+            matcher.setVersion("0.0.1-SNAPSHOT");
+            matcher.setEndPoint("http://localhost:8081/api/logmap");
+            matcher.getConfigurationParameters().put("outputPath", null);
+            matcher.getConfigurationParameters().put("evalImpact", false);
+            matcherRepository.save(matcher);
+        }
+
     }
 
 
