@@ -63,6 +63,40 @@
 			</exclusions>
 		</dependency>
 
+		<!-- FCA Map -->
+		<dependency>
+			<groupId>FCA_Lib</groupId>
+			<artifactId>FCA_Lib</artifactId>
+			<version>LATEST</version>
+			<systemPath>${basedir}/lib/FCAMap/FCA_Lib.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>FCA_Map</groupId>
+			<artifactId>FCA_Map</artifactId>
+			<version>LATEST</version>
+			<systemPath>${basedir}/lib/FCAMap/FCA_Map.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>Lvg2016api</groupId>
+			<artifactId>Lvg2016api</artifactId>
+			<systemPath>${basedir}/lib/FCAMap/lvg2016api.jar</systemPath>
+			<version>LATEST</version>
+			<scope>system</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>Lvg2016dist</groupId>
+			<artifactId>Lvg2016dist.jar</artifactId>
+			<version>LATEST</version>
+			<systemPath>${basedir}/lib/FCAMap/lvg2016dist.jar</systemPath>
+			<scope>system</scope>
+		</dependency>
+
+		<!-- Log Map -->
 		<dependency>
 			<groupId>LogMap</groupId>
 			<artifactId>LogMap</artifactId>
@@ -79,6 +113,7 @@
 			<systemPath>${basedir}/lib/LogMap/HermiT1.3.8.jar</systemPath>
 		</dependency>
 
+		<!-- AML -->
 
 		<dependency>
 			<groupId>aml</groupId>

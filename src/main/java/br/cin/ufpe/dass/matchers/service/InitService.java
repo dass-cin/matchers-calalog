@@ -87,6 +87,14 @@ public class InitService {
             matcherRepository.save(matcher);
         }
 
+        if (matcherRepository.findByName("FCAMap") == null) {
+            Matcher matcher = new Matcher();
+            matcher.setName("FCAMap");
+            matcher.setVersion("0.0.1-SNAPSHOT");
+            matcher.setEndPoint("http://localhost:8081/api/fcamap");
+            matcherRepository.save(matcher);
+        }
+
     }
 
 

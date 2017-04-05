@@ -1,5 +1,6 @@
 package br.cin.ufpe.dass.matcherswrappers;
 
+import Method.FCA_Map;
 import aml.AML;
 import br.cin.ufpe.dass.matchers.config.ApplicationProperties;
 import org.springframework.boot.SpringApplication;
@@ -28,5 +29,8 @@ public class MatchersWrappersApplication {
 	public AML aml() {
 		return AML.getInstance();
 	}
+
+	@Bean
+	public FCA_Map fcaMap() { return new FCA_Map(); }
 
 }
